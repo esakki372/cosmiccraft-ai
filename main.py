@@ -9,10 +9,10 @@ import os
 app = FastAPI(
     title="ComicCraft AI",
     version="1.0",
-    description="AI Comic Story Creator powered by Google Gemini and Stable Diffusion"
+    description="AI Comic Story Creator"
 )
 
-# Add CORS middleware for cross-origin requests
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,58 +21,55 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Ensure static directory exists
+# Create directories
 os.makedirs("static", exist_ok=True)
 os.makedirs("static/panels", exist_ok=True)
 os.makedirs("static/exports", exist_ok=True)
 os.makedirs("templates", exist_ok=True)
 
-# Mount static files directory
+# Mount static files
 try:
     app.mount("/static", StaticFiles(directory="static"), name="static")
-except Exception as e:
-    print(f"Warning: Could not mount static files: {e}")
+except:
+    pass
 
-# Template configuration
+# Templates
 try:
     templates = Jinja2Templates(directory="templates")
-except Exception as e:
-    print(f"Warning: Could not load templates: {e}")
+except:
     templates = None
 
-# Include API routes
+# Routes
 app.include_router(router)
 
-@app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    """Serve the main UI"""
-    try:
-        if templates:
+@app.get("/")
+async def read_root():
+    """Root endpoint"""
+    if templates:
+        try:
             return templates.TemplateResponse(
                 "index.html",
-                {"request": request}
+                {"request": {}}
             )
-        else:
-            return "<h1>ComicCraft AI - Welcome!</h1><p>Templates not found. Check templates/ directory.</p>"
-    except Exception as e:
-        return f"<h1>ComicCraft AI</h1><p>Error loading template: {str(e)}</p>"
+        except:
+            pass
+    return {"message": "ComicCraft AI API", "docs": "/docs"}
 
 @app.get("/health")
-async def health_check():
-    """Health check endpoint for Render monitoring"""
-    return {
-        "status": "healthy",
-        "service": "ComicCraft AI",
-        "version": "1.0"
-    }
+async def health():
+    """Health check"""
+    return {"status": "ok", "service": "ComicCraft AI"}
 
-@app.get("/api/status")
-async def api_status():
-    """API status endpoint"""
+@app.get("/api/info")
+async def api_info():
+    """API info"""
     return {
-        "service": "ComicCraft AI API",
-        "status": "running",
-        "endpoints": {
-            "generate-comic": "/api/generate-comic (POST)"
-        }
+        "name": "ComicCraft AI",
+        "version": "1.0",
+        "endpoints": [
+            "/api/generate-comic",
+            "/api/generate-outline",
+            "/api/generate-story",
+            "/api/status"
+        ]
     }

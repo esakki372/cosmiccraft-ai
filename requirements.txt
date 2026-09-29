@@ -4,7 +4,4 @@ google-genai==0.3.0
 python-dotenv==1.0.0
 pydantic==2.5.0
 Pillow==10.1.0
-diffusers==0.25.0
-torch==2.1.0
-transformers==4.35.0
 fpdf2==2.7.0

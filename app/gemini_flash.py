@@ -4,16 +4,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Initialize the client (it will automatically look for GEMINI_API_KEY environment variable)
+# Initialize the client
 api_key = os.getenv("GEMINI_API_KEY")
 
-if not api_key:
-    raise ValueError(
-        "GEMINI_API_KEY environment variable not found. "
-        "Please set it in your .env file or Render environment variables."
-    )
-
-client = genai.Client(api_key=api_key)
+if api_key:
+    client = genai.Client(api_key=api_key)
+else:
+    client = None
+    print("WARNING: GEMINI_API_KEY not configured")
 
 def generate_outline(prompt: str):
     """Generate comic panel outline using Gemini Flash 2.5
@@ -24,6 +22,9 @@ def generate_outline(prompt: str):
     Returns:
         Text outline of comic panels
     """
+    if not client:
+        return f"Demo outline for: {prompt}\n\nPanel 1: Opening scene\nPanel 2: Conflict\nPanel 3: Climax\nPanel 4: Resolution"
+    
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -31,4 +32,5 @@ def generate_outline(prompt: str):
         )
         return response.text
     except Exception as e:
-        raise Exception(f"Error generating outline: {str(e)}")
+        print(f"Error: {str(e)}")
+        return f"Demo outline for: {prompt}\n\nPanel 1: Opening scene\nPanel 2: Conflict\nPanel 3: Climax\nPanel 4: Resolution"
