@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComicCraft AI</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f0f2f5;margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center}.box{background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);width:420px;max-width:90%}h2{text-align:center}label{font-weight:bold;display:block;margin-top:12px}input,select,textarea{width:100%;padding:9px;margin-top:5px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box}button{width:100%;background:#007bff;color:white;border:0;padding:11px;margin-top:20px;border-radius:6px;font-size:16px;cursor:pointer}.status{margin-top:15px;text-align:center}.hidden{display:none}.result{margin-top:20px}.download{display:block;text-align:center;background:#28a745;color:#fff;padding:10px;border-radius:6px;text-decoration:none;margin-top:15px}
+</style></head>
+<body><div class="box">
+<h2>✨ ComicCraft AI</h2>
+<form id="comicForm">
+<label>Story Prompt:</label><textarea id="prompt" rows="3" required placeholder="A young wizard discovering a hidden portal..."></textarea>
+<label>Main Character:</label><input id="character" required placeholder="Aria">
+<label>Setting:</label><input id="setting" required placeholder="Ancient Ruins">
+<label>Story Tone:</label><select id="tone"><option>light-hearted</option><option>dramatic</option><option>mysterious</option></select>
+<label>Art Style:</label><select id="art_style"><option>classic comic book</option><option>anime</option><option>pixel art</option></select>
+<button type="submit">Generate Comic</button></form>
+<div id="status" class="status"></div><div id="result" class="result hidden"></div>
+</div>
+<script>
+const form=document.getElementById('comicForm'),status=document.getElementById('status'),result=document.getElementById('result');
+form.addEventListener('submit',async(e)=>{e.preventDefault();status.textContent='Generating your comic...';result.classList.add('hidden');
+const data={prompt:document.getElementById('prompt').value,character:document.getElementById('character').value,setting:document.getElementById('setting').value,tone:document.getElementById('tone').value,art_style:document.getElementById('art_style').value};
+try{const r=await fetch('/api/generate-comic',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json();
+if(j.status!=='success')throw new Error(j.error||'Generation failed');
+status.textContent='Comic generated successfully!';result.innerHTML='<h3>Story</h3><p>'+escapeHtml(j.story)+'</p>'+(j.pdf_path?'<a class="download" href="'+j.pdf_path+'" target="_blank">Download PDF Comic</a>':'');result.classList.remove('hidden');
+}catch(err){status.textContent='Unable to generate comic: '+err.message;}
+});
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+</script></body></html>

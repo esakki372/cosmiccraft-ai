@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicCraft AI - Generator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <h2>✨ ComicCraft AI</h2>
+
+        <form action="/generate-comic" method="POST">
+
+            <label for="prompt">Story Prompt:</label>
+
+            <textarea
+                id="prompt"
+                name="prompt"
+                rows="3"
+                required
+                placeholder="A young wizard discovering a hidden portal..."
+            ></textarea>
+
+
+            <label for="character">Main Character Name:</label>
+
+            <input
+                type="text"
+                id="character"
+                name="character"
+                required
+                placeholder="Aria"
+            >
+
+
+            <label for="setting">Setting:</label>
+
+            <input
+                type="text"
+                id="setting"
+                name="setting"
+                required
+                placeholder="Ancient Ruins"
+            >
+
+
+            <label for="tone">Story Tone:</label>
+
+            <select id="tone" name="tone">
+
+                <option value="light-hearted">
+                    Light-hearted
+                </option>
+
+                <option value="dramatic">
+                    Dramatic
+                </option>
+
+                <option value="mysterious">
+                    Mysterious
+                </option>
+
+            </select>
+
+
+            <label for="art_style">Art Style:</label>
+
+            <select id="art_style" name="art_style">
+
+                <option value="classic comic book">
+                    Classic Comic Book
+                </option>
+
+                <option value="anime">
+                    Anime
+                </option>
+
+                <option value="pixel art">
+                    Pixel Art
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Generate Comic
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

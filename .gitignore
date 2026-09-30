@@ -1,0 +1,61 @@
+# Environment variables - NEVER COMMIT THESE!
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.example
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Static files and caches
+static/panels/
+static/exports/
+*.pyc
+.pytest_cache/
+.coverage
+
+# ML Models (too large for git)
+models/
+*.pt
+*.bin
+*.ckpt
+
+# OS files
+.DS_Store
+Thumbs.db

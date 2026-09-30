@@ -1,0 +1,37 @@
+# =================
+# Environment & Secrets
+# =================
+.env
+.env.local
+
+# =================
+# Python / Virtual Environment
+# =================
+comiccraft-env/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# =================
+# Generated Assets & Logs
+# =================
+static/generated/
+*.log
+pip-log.txt
+
+# =================
+# IDE & Editors
+# =================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
